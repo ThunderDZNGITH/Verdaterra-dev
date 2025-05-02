@@ -36,9 +36,7 @@ void buildTile(sf::RenderWindow &window, World world){
     int tileX = static_cast<int>(tileCoords.x)-1;
     int tileZ = static_cast<int>(tileCoords.y);
     
-    if(world.heightMap[tileX][1][tileZ] == true) {
-        world.map.push_back({tileX, 3, tileZ, TileType::grass});
-    } 
+    world.map.push_back({tileX, world.heightMap[tileX][tileZ]+1, tileZ, TileType::grass});
 } 
 
 void Game::processEvents(float deltaTime) {
@@ -65,7 +63,7 @@ void Game::processEvents(float deltaTime) {
         std::cout << "Zoom level: " << zoomLevel << std::endl;*/
 
     } 
-    player.handleInput(deltaTime);
+    player.handleInput(deltaTime, world);
 } 
 
 void drawPointer(sf::RenderWindow &window, World world) {

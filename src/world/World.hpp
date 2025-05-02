@@ -14,7 +14,7 @@ public:
     void drawTile(sf::RenderWindow &window, ResLoader resLoader, int x, int y, int z, TileType type);
     sf::Vector2i isoProject(int x, int y, int z);
 
-    bool heightMap[100][4][100] = {false};
+    int heightMap[100][100] = {0};
     Tile tileMap[100][4][100] = {false};        
 
     ResLoader resLoader;

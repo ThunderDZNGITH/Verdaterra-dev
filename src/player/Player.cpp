@@ -1,4 +1,4 @@
-#include "Player.hpp"
+#include "Player.hpp" 
 #include <SFML/Graphics.hpp>
 #include <iostream> 
 
@@ -24,9 +24,8 @@ void Player::setResLoader(ResLoader loader){
     sprite.setOrigin(sf::Vector2f(16, 58));
 } 
 
-void Player::handleInput(float deltaTime) {
+void Player::handleInput(float deltaTime, World world) {
     float moveStep = speed * deltaTime;
-
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) { 
         speed = 4.0f;
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && sf::Keyboard::isKeyPressed(sf::Keyboard::D)) { 
@@ -92,8 +91,8 @@ void Player::handleInput(float deltaTime) {
 
         sprite.setTextureRect(sf::IntRect(currentFrame*32 , 0, 32, 64));
     } 
- 
-    position = isoProject(x, y, z); 
+    
+    position = isoProject(x, world.heightMap[(int)x][(int)z], z); 
     //std::cout << "Player pos x: "+std::to_string(x)+" y: "+std::to_string(y)+" z: "+std::to_string(z) << std::endl;
 }
 

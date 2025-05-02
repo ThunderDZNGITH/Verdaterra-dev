@@ -25,11 +25,13 @@ World::World(int world_max_x, int world_max_y, int world_max_z)
 
     for (int x = 0; x < world_max_x; ++x) {
         for (int z = 0; z < world_max_z; ++z) {
-            int y = 0;
-            World::map.push_back({x, y, z, TileType::grass});
-            heightMap[x][y][z] = true;   
+            float noiseValue = noise.GetNoise((float)x, (float)z);
+            int height = static_cast<int>((noiseValue + 1.0f) * 10);
+            World::map.push_back({x, height, z, TileType::grass});
+            heightMap[x][z] = height;   
         }
     }
+    World::map.push_back({1, 2, 1, TileType::grass});
 } 
 
 void World::draw(sf::RenderWindow &window, ResLoader resLoader){
@@ -53,7 +55,7 @@ void World::draw(sf::RenderWindow &window, ResLoader resLoader){
 void World::drawTile(sf::RenderWindow &window, ResLoader resLoader, int x, int y, int z, TileType type){
     sf::Vector2f pos = static_cast<sf::Vector2f>(isoProject(x, y, z));
 
-    heightMap[x][y][z] = true;   
+    heightMap[x][z] = heightMap[x][z]+1;   
 
     sf::Sprite sprite(resLoader.tileset);
     switch(type) {
